@@ -58,8 +58,9 @@ active_lobbies = {}
 
 GIRL_BANNER_URL = "https://cdn.discordapp.com/attachments/1544309714962227230/1558116524093341727/banner_girl.png?ex=6ad96dd7&is=6ad81c57&hm=0df121c732dd219e0a893923b0744965c8b52b8f44a02ebe03e794b1746e9e&"
 MEDIA_BANNER_URL = "https://multibot.pro/api/embeds/images/nfmpvssumgp3km0o"
-TICKET_BANNER_URL = "https://multibot.pro/api/embeds/images/g4mmec3lwfcrwi4l"
-
+TICKET_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563701608842395709/10f9150f-0111-4c5f-a55d-c6d8601a2023.png?ex=6ade961b&is=6add449b&hm=55967f58dec7d2e892a83c470adb740f2ca043fefa8d7245466995c0095e6825&=&format=webp&quality=lossless"
+INFO_BANNER_URL = ""
+VOICE_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563702289066369024/629c21bb-a4da-4324-863f-700e2e8e868a.png?ex=6ade96bd&is=6add453d&hm=16d183fb3abd030179d9cd447de9abd16af3426409a972bf16a98dd1374d14fd&=&format=webp&quality=lossless"  # Немесе өзіңіздің сурет сілтемеңіз
 STAFF_ROLE_IDS = [
     1548371779548876907, 1548371779548876904, 1548371779548876903,
     1548371779544813606, 1548371779544813607, 1548371779544813605
@@ -1680,8 +1681,74 @@ async def send_clan(ctx):
     )
     embed.set_footer(text="alashproject.kz")
     await ctx.send(embed=embed, view=ClanPanelView())
+    
+@bot.command()
+async def send_info(ctx):
+    try:
+        await ctx.message.delete()
+    except:
+        pass
 
+    blue_color = discord.Color.from_rgb(53, 162, 235)
 
+    # 1. Баннер
+    img_embed = discord.Embed(color=blue_color)
+    img_embed.set_image(url=INFO_BANNER_URL)
+    await ctx.send(embed=img_embed)
+
+    # 2. Текст инфо-центра
+    text_embed = discord.Embed(
+        description=(
+            "<a:132078whitespaceheart:1562454784387317920> **Информационный центр**\n\n"
+            "<a:a_pink_dot:1562471740410560532> **Тикет система:**\n"
+            "Подача заявок в администрацию, жалобы на игроков и администраторов, "
+            "<a:a_pink_dot:1562471740410560532> а также обжалование блокировок осуществляются через специальный чат 📞 • **тикет** — <#1548371780035543147>\n\n"
+            "<a:a_pink_dot:1562471740410560532> **Навигация:**\n"
+            "<a:a_pink_dot:1562471740410560532> **Актуальные новости комьюнити** — <#1548371780538867751>\n"
+            "<a:a_pink_dot:1562471740410560532> **Правила Discord сервера** — <#1548371780538867746>\n"
+            "<a:a_pink_dot:1562471740410560532> **Техническая поддержка проекта** — <#1548371780035543147>\n"
+            "<a:a_pink_dot:1562471740410560532> **Верификация Steam аккаунта** — <#1548371780538867750>\n\n"
+        ),
+        color=blue_color
+    )
+    await ctx.send(embed=text_embed)
+
+# ===================================================
+# VOICE PANEL COMMAND (!send_voice_panel)
+# ===================================================
+@bot.command()
+async def send_voice_panel(ctx):
+    try:
+        await ctx.message.delete()
+    except:
+        pass
+
+    # Жасыл түсті орнатамыз
+    green_color = discord.Color.green()
+
+    # 1. Жоғарғы баннер-сурет
+    img_embed = discord.Embed(color=green_color)
+    img_embed.set_image(url=VOICE_BANNER_URL)
+    await ctx.send(embed=img_embed)
+
+    # 2. Негізгі ақпарат пен сипаттама
+    text_embed = discord.Embed(
+        description=(
+            "» **Управление временными каналами**\n\n"
+            "• Создайте свой уникальный голосовой канал\n\n"
+            "» **Настройки**\n\n"
+            "• 👥 Лимит участников\n"
+            "• ✏️ Переименование\n"
+            "• 👑 Передача прав\n"
+            "• 🔒 Управление видимостью\n\n"
+            "» **Как использовать**\n\n"
+            "• Подключитесь к голосовому каналу\n"
+            "• Используйте кнопки управления\n"
+        ),
+        color=green_color
+    )
+
+    await ctx.send(embed=text_embed, view=VoiceControlPanel())
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
 # --------------------------------------------------
