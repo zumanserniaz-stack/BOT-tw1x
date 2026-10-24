@@ -1165,7 +1165,7 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         activity = discord.Activity(
             type=discord.ActivityType.watching, 
-            name="VIBE PROJECT.kz | /help"
+            name="VIBE.KZ | /help"
         )
         await self.change_presence(activity=activity)
         print("==========================================")
