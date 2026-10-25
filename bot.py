@@ -1752,7 +1752,7 @@ async def social_buttons(ctx):
     await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
 
 # ===================================================
-# LEVEL SYSTEM (ДЕҢГЕЙ ЖҮЙЕСІ)
+# БАРЛЫҚ ON_MESSAGE ФУНКЦИЯЛАРЫН БІРІКТІРУ
 # ===================================================
 user_levels = {}
 
@@ -1761,42 +1761,37 @@ async def on_message(message):
     if message.author.bot:
         return
 
+    # 1. Ұпай (XP) және деңгей жүйесі
     author_id = message.author.id
-
     if author_id not in user_levels:
         user_levels[author_id] = {"xp": 0, "level": 1}
 
-    # Деңгей ұзағырақ шығуы үшін әр хабарламаға 2 XP қосылады
     user_levels[author_id]["xp"] += 2
-    
     current_xp = user_levels[author_id]["xp"]
     current_level = user_levels[author_id]["level"]
-    
-    # Келесі деңгейге өту үшін қажетті XP көлемі
     next_level_xp = current_level * 150
 
     if current_xp >= next_level_xp:
         user_levels[author_id]["level"] += 1
         new_level = user_levels[author_id]["level"]
 
-        # Қызыл түсті жақтау және статистика
         embed = discord.Embed(
             title="🎉 Повышение уровня!",
             description=f"Поздравляем, {message.author.mention}! Вы достигли уровня **{new_level}**!\n\n📊 **Статистика**\nУровень: {current_level} ➔ {new_level}\nXP: {current_xp}",
-            color=discord.Color.from_rgb(237, 66, 69) # Қызыл түс
+            color=discord.Color.from_rgb(237, 66, 69)
         )
         
         if message.author.avatar:
             embed.set_thumbnail(url=message.author.avatar.url)
 
-        # Хабарламаны тек LEVEL_CHANNEL_ID арнасына жіберу
+        # LEVEL_CHANNEL_ID арнасына жіберу
         channel = bot.get_channel(LEVEL_CHANNEL_ID)
         if channel:
             await channel.send(embed=embed)
         else:
-            # Егер арна табылмаса, қате шықпас үшін сол чаттың өзіне жібереді
             await message.channel.send(embed=embed)
 
+    # 2. МІНДЕТТІ ТҮРДЕ: Басқа командалар дұрыс жұмыс істеуі үшін
     await bot.process_commands(message)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
