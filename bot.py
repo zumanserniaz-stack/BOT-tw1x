@@ -1752,7 +1752,7 @@ async def social_buttons(ctx):
     await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
 
 # ===================================================
-# БАРЛЫҚ ON_MESSAGE ФУНКЦИЯЛАРЫН БІРІКТІРУ
+# LEVEL SYSTEM (100 ДЕҢГЕЙГЕ ДЕЙІН)
 # ===================================================
 user_levels = {}
 
@@ -1761,24 +1761,36 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    # 1. Ұпай (XP) және деңгей жүйесі
     author_id = message.author.id
+
+    # Егер қолданушы әлі базада болмаса, 1-ші деңгейден бастаймыз
     if author_id not in user_levels:
         user_levels[author_id] = {"xp": 0, "level": 1}
 
-    user_levels[author_id]["xp"] += 2
-    current_xp = user_levels[author_id]["xp"]
+    # Қолданушы қазір қай деңгейде екенін көреміз
     current_level = user_levels[author_id]["level"]
-    next_level_xp = current_level * 150
 
-    if current_xp >= next_level_xp:
+    # Егер деңгей 100-ге жетіп қойса, әрі қарай өспейді
+    if current_level < 100:
+        # Әр хабарламаға 5 XP қосылады
+        user_levels[author_id]["xp"] += 5
+    
+    current_xp = user_levels[author_id]["xp"]
+    
+    # Әр деңгей үшін келесі деңгейге өтетін XP мөлшері (мысалы: деңгей * 100)
+    # 1-ден 2-ге өту үшін 100 XP, 2-ден 3-ке өту үшін 200 XP ж.т.д.
+    next_level_xp = current_level * 100
+
+    # Егер XP жеткілікті болса және деңгей 100-ден аспаса
+    if current_xp >= next_level_xp and current_level < 100:
         user_levels[author_id]["level"] += 1
         new_level = user_levels[author_id]["level"]
 
+        # Қызыл жиекті Embed хабарлама
         embed = discord.Embed(
             title="🎉 Повышение уровня!",
-            description=f"Поздравляем, {message.author.mention}! Вы достигли уровня **{new_level}**!\n\n📊 **Статистика**\nУровень: {current_level} ➔ {new_level}\nXP: {current_xp}",
-            color=discord.Color.from_rgb(237, 66, 69)
+            description=f"Поздравляем, {message.author.mention}! Вы достигли уровня **{new_level}** из 100!\n\n📊 **Статистика**\nУровень: {current_level} ➔ {new_level}\nXP: {current_xp}",
+            color=discord.Color.from_rgb(237, 66, 69) # Қызыл түс
         )
         
         if message.author.avatar:
@@ -1791,7 +1803,7 @@ async def on_message(message):
         else:
             await message.channel.send(embed=embed)
 
-    # 2. МІНДЕТТІ ТҮРДЕ: Басқа командалар дұрыс жұмыс істеуі үшін
+    # Басқа командалар дұрыс жұмыс істеуі үшін міндетті түрде қажет
     await bot.process_commands(message)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
