@@ -1192,21 +1192,6 @@ async def on_member_join(member):
 
 
 @bot.event
-async def on_message(message):
-    if message.author.bot: return
-    uid = message.author.id
-    if uid not in user_levels: user_levels[uid] = {"exp": 0, "level": 1}
-    
-    user_levels[uid]["exp"] += 7
-    
-    if user_levels[uid]["exp"] >= user_levels[uid]["level"] * 100:
-        user_levels[uid]["level"] += 1
-        l_ch = message.guild.get_channel(LEVEL_CHANNEL_ID)
-        if l_ch: await l_ch.send(f"Поздравляем {message.author.mention}! Ты достиг {user_levels[uid]['level']} уровня!")
-    await bot.process_commands(message)
-
-
-@bot.event
 async def on_message_delete(message):
     if message.author.bot: return
     await send_custom_log(
@@ -1765,6 +1750,48 @@ async def social_buttons(ctx):
 
     # Хабарлама жіберу
     await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
+
+# ===================================================
+# LEVEL SYSTEM (ДЕҢГЕЙ ЖҮЙЕСІ)
+# ===================================================
+user_levels = {}
+
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
+
+    author_id = message.author.id
+
+    if author_id not in user_levels:
+        user_levels[author_id] = {"xp": 0, "level": 1}
+
+    # Деңгей ұзағырақ шығуы үшін әр хабарламаға 2 XP қосылады
+    user_levels[author_id]["xp"] += 2
+    
+    current_xp = user_levels[author_id]["xp"]
+    current_level = user_levels[author_id]["level"]
+    
+    # Келесі деңгейге өту үшін қажетті XP көлемі
+    next_level_xp = current_level * 150
+
+    if current_xp >= next_level_xp:
+        user_levels[author_id]["level"] += 1
+        new_level = user_levels[author_id]["level"]
+
+        # Қызыл түсті жақтау үшін color=discord.Color.red() немесе HEX код қолданылды
+        embed = discord.Embed(
+            title="🎉 Повышение уровня!",
+            description=f"Поздравляем, {message.author.mention}! Вы достигли уровня **{new_level}**!\n\n📊 **Статистика**\nУровень: {current_level} ➔ {new_level}\nXP: {current_xp}",
+            color=discord.Color.from_rgb(237, 66, 69) # Қызыл түс
+        )
+        
+        if message.author.avatar:
+            embed.set_thumbnail(url=message.author.avatar.url)
+
+        await message.channel.send(embed=embed)
+
+    await bot.process_commands(message)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
 # --------------------------------------------------
