@@ -57,9 +57,9 @@ user_clan_mapping = {}
 active_lobbies = {}
 
 GIRL_BANNER_URL = "https://cdn.discordapp.com/attachments/1544309714962227230/1558116524093341727/banner_girl.png?ex=6ad96dd7&is=6ad81c57&hm=0df121c732dd219e0a893923b0744965c8b52b8f44a02ebe03e794b1746e9e&"
-MEDIA_BANNER_URL = "https://multibot.pro/api/embeds/images/nfmpvssumgp3km0o"
+MEDIA_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563703757529948220/-__.png?ex=6ade981c&is=6add469c&hm=39903753b615cdf3ab443c3af7de91f1d99f31a173f04e9d7490fd81b0e6521d&=&format=webp&quality=lossless&width=2048&height=729"
 TICKET_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563701608842395709/10f9150f-0111-4c5f-a55d-c6d8601a2023.png?ex=6ade961b&is=6add449b&hm=55967f58dec7d2e892a83c470adb740f2ca043fefa8d7245466995c0095e6825&=&format=webp&quality=lossless"
-INFO_BANNER_URL = ""
+INFO_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563701182965481624/c7dbd822-c8b1-4090-817f-7041ce511c83.png?ex=6ade95b6&is=6add4436&hm=397f7e93d10f6ccda3acd3abc566cfc94e5e36ced2be1ed2e9ac9f8008a65502&=&format=webp&quality=lossless"
 VOICE_BANNER_URL = "https://media.discordapp.net/attachments/1563682634364620901/1563702289066369024/629c21bb-a4da-4324-863f-700e2e8e868a.png?ex=6ade96bd&is=6add453d&hm=16d183fb3abd030179d9cd447de9abd16af3426409a972bf16a98dd1374d14fd&=&format=webp&quality=lossless"  # Немесе өзіңіздің сурет сілтемеңіз
 STAFF_ROLE_IDS = [
     1548371779548876907, 1548371779548876904, 1548371779548876903,
@@ -1729,7 +1729,6 @@ async def send_voice(ctx):
         ),
         color=green_color
     )
-
     await ctx.send(embed=text_embed, view=VoiceControlPanel())
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
