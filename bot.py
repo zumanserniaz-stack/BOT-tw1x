@@ -1736,9 +1736,9 @@ async def send_voice(ctx):
 @bot.command(name="social", aliases=["links"])
 async def social_buttons(ctx):
     try:
-        await ctx.message.delete()
-    except:
-        pass
+    await ctx.message.delete()
+except:
+    pass
 
     view = View()
     
