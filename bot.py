@@ -1576,7 +1576,7 @@ async def send_verification(ctx):
         color=discord.Color.blue()
     )
     await ctx.send(embed=embed, view=FaceitVerifyView())
-я
+
 @bot.command()
 async def send_girl_ticket(ctx):
     try:
@@ -1608,7 +1608,7 @@ async def send_ticket(ctx):
         await ctx.send(file=file, embed=img_embed)
     text_embed = discord.Embed(
         description=(
-            "<:739224member:1562452681497378846> **Система поддержки ALASH PROJECT KZ**\n\n"
+            "<:739224member:1562452681497378846> **Система поддержки VIBE PROJECT**\n\n"
             "<a:15770animatedarrowyellow:1562455396814290994> **Возникли вопросы, проблемы или нужна помощь? Опишите ситуацию**\n\n"
             "<a:15770animatedarrowyellow:1562455396814290994> **Что можно оформить через тикет?**\n"
             "<a:a_pink_dot:1562471740410560532> Жалобы на игроков или пользователей.\n"
@@ -1635,7 +1635,7 @@ async def send_media(ctx):
             "<a:15770animatedarrowyellow:1562455396814290994> **Что вы получите**\n"
             "<a:a_pink_dot:1562471740410560532> Привилегию на сервере \"Медиа\"\n"
             "<a:a_pink_dot:1562471740410560532> Роль в Discord <@&1548371779544813603>\n"
-            "<a:a_pink_dot:1562471740410560532> В привилегию \"MEDIA\" входит весь функционал привилегии \"ALASH\""
+            "<a:a_pink_dot:1562471740410560532> В привилегию \"MEDIA\" входит весь функционал привилегии \"VIBE\""
         ).format(MEDIA_ROLE_ID=MEDIA_ROLE_ID), 
         color=discord.Color.from_rgb(180, 0, 0)
     )
