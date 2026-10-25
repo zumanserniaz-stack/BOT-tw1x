@@ -1752,7 +1752,7 @@ async def social_buttons(ctx):
     # WhatsApp түймесі
     whatsapp_button = Button(
         label="Whatsapp", 
-        url="https://wa.me/your_number", 
+        url="https://wa.me/747 744 2206", 
         emoji="🟢"
     )
 
