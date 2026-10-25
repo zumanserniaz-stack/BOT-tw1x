@@ -1735,8 +1735,8 @@ async def send_voice(ctx):
 # ===================================================
 @bot.command(name="social", aliases=["links"])
 async def social_buttons(ctx):
-    try:
-    await ctx.message.delete()
+   try:
+    await ctx.message.delete()  # Міндетті түрде осылай ішке қарай ығысып тұруы керек
 except:
     pass
 
