@@ -1822,7 +1822,7 @@ async def on_ready():
     except Exception as e:
         print(f"Қате шықты: {e}")
         
-    print(f"Бот {bot.user} жұмысқа дайын!")!")
+    print(f"Бот {bot.user} жұмысқа дайын!"))
 # 1. Команда /avatar
 @bot.tree.command(name="avatar", description="Показать аватар пользователя")
 @app_commands.describe(member="Выберите пользователя (необязательно)")
