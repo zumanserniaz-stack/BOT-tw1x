@@ -6,6 +6,7 @@ import random
 import collections
 import discord
 from discord.ext import commands
+from discord import app_commands
 from discord.ui import View, Button, Modal, TextInput, UserSelect
 from flask import Flask
 from threading import Thread
@@ -1805,6 +1806,62 @@ async def on_message(message):
 
     # Басқа командалар дұрыс жұмыс істеуі үшін міндетті түрде қажет
     await bot.process_commands(message)
+
+# Синхронизация слэш-команд при запуске бота (добавьте это в событие on_ready)
+@bot.event
+async def on_ready():
+    try:
+        synced = await bot.tree.sync()
+        print(f"Синхронизировано слэш-команд: {len(synced)}")
+    except Exception as e:
+        print(e)
+    print(f"Бот {bot.user} запущен!")
+
+# 1. Команда /avatar
+@bot.tree.command(name="avatar", description="Показать аватар пользователя")
+@app_commands.describe(member="Выберите пользователя (необязательно)")
+async def avatar(interaction: discord.Interaction, member: discord.Member = None):
+    target = member or interaction.user
+    avatar_url = target.avatar.url if target.avatar else target.default_avatar.url
+    
+    embed = discord.Embed(title=f"Аватар пользователя {target.name}", color=discord.Color.red())
+    embed.set_image(url=avatar_url)
+    
+    # МІНДЕТТІ ТҮРДЕ МЫНА ЖОЛДЫ ҚОСУ КЕРЕК:
+    await interaction.response.send_message(embed=embed)
+
+# 2. Команда /ping
+@bot.tree.command(name="ping", description="Проверить задержку бота")
+async def ping(interaction: discord.Interaction):
+    latency = round(bot.latency * 1000)
+    await interaction.response.send_message(f"Pong! 🏓 Задержка: **{latency}ms**", ephemeral=True)
+
+# 3. Команда /serverinfo
+@bot.tree.command(name="serverinfo", description="Показать информацию о сервере")
+async def serverinfo(interaction: discord.Interaction):
+    guild = interaction.guild
+    embed = discord.Embed(title=f"Информация о сервере: {guild.name}", color=discord.Color.red())
+    embed.add_field(name="Участники", value=guild.member_count, inline=True)
+    embed.add_field(name="Владелец", value=guild.owner.mention, inline=True)
+    embed.add_field(name="Создан", value=guild.created_at.strftime("%d.%m.%Y"), inline=True)
+    if guild.icon:
+        embed.set_thumbnail(url=guild.icon.url)
+    await interaction.response.send_message(embed=embed)
+
+# 4. Команда /userinfo
+@bot.tree.command(name="userinfo", description="Показать информацию об участнике")
+@app_commands.describe(member="Выберите пользователя (необязательно)")
+async def userinfo(interaction: discord.Interaction, member: discord.Member = None):
+    target = member or interaction.user
+    roles = [role.mention for role in target.roles[1:]] # Исключаем @everyone
+    roles_str = ", ".join(roles) if roles else "Нет ролей"
+    
+    embed = discord.Embed(title=f"Информация об участнике: {target.name}", color=discord.Color.red())
+    embed.set_thumbnail(url=target.avatar.url if target.avatar else target.default_avatar.url)
+    embed.add_field(name="ID", value=target.id, inline=True)
+    embed.add_field(name="Присоединился", value=target.joined_at.strftime("%d.%m.%Y") if target.joined_at else "Неизвестно", inline=True)
+    embed.add_field(name="Роли", value=roles_str, inline=False)
+    await interaction.response.send_message(embed=embed)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
 # --------------------------------------------------
