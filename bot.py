@@ -1735,21 +1735,14 @@ async def send_voice(ctx):
 # ===================================================
 @bot.command(name="social", aliases=["links"])
 async def social_buttons(ctx):
-   try:
-    await ctx.message.delete()  # Міндетті түрде осылай ішке қарай ығысып тұруы керек
-except:
-    pass
-
     view = View()
     
-    # Discord түймесі
     discord_button = Button(
         label="Discord", 
         url="https://discord.com/users/1043426897482231859", 
         emoji="💬"
     )
     
-    # WhatsApp түймесі
     whatsapp_button = Button(
         label="Whatsapp", 
         url="https://wa.me/747 744 2206", 
