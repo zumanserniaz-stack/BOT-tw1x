@@ -1737,12 +1737,21 @@ async def send_voice(ctx):
 async def social_buttons(ctx):
     view = View()
     
+    # Discord түймесі
     discord_button = Button(
         label="Discord", 
         url="https://discord.com/users/1043426897482231859", 
         emoji="💬"
     )
     
+    # Telegram түймесі (Өз Telegram сілтемеңізді жазыңыз)
+    telegram_button = Button(
+        label="Telegram", 
+        url="https://t.me/alimovxl", 
+        emoji="✈️"
+    )
+
+    # WhatsApp түймесі (Өз нөміріңізді жазыңыз, мысалы: https://wa.me/77001234567)
     whatsapp_button = Button(
         label="Whatsapp", 
         url="https://wa.me/7477442206", 
@@ -1750,9 +1759,10 @@ async def social_buttons(ctx):
     )
 
     view.add_item(discord_button)
+    view.add_item(telegram_button)
     view.add_item(whatsapp_button)
 
-    await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
+    await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view))
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
 # --------------------------------------------------
