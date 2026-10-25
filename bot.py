@@ -1779,7 +1779,7 @@ async def on_message(message):
         user_levels[author_id]["level"] += 1
         new_level = user_levels[author_id]["level"]
 
-        # Қызыл түсті жақтау үшін color=discord.Color.red() немесе HEX код қолданылды
+        # Қызыл түсті жақтау және статистика
         embed = discord.Embed(
             title="🎉 Повышение уровня!",
             description=f"Поздравляем, {message.author.mention}! Вы достигли уровня **{new_level}**!\n\n📊 **Статистика**\nУровень: {current_level} ➔ {new_level}\nXP: {current_xp}",
@@ -1789,7 +1789,13 @@ async def on_message(message):
         if message.author.avatar:
             embed.set_thumbnail(url=message.author.avatar.url)
 
-        await message.channel.send(embed=embed)
+        # Хабарламаны тек LEVEL_CHANNEL_ID арнасына жіберу
+        channel = bot.get_channel(LEVEL_CHANNEL_ID)
+        if channel:
+            await channel.send(embed=embed)
+        else:
+            # Егер арна табылмаса, қате шықпас үшін сол чаттың өзіне жібереді
+            await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
 # --------------------------------------------------
