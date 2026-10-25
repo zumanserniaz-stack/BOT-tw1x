@@ -1576,25 +1576,7 @@ async def send_verification(ctx):
         color=discord.Color.blue()
     )
     await ctx.send(embed=embed, view=FaceitVerifyView())
-
-
-@bot.command()
-async def send_voice_panel(ctx):
-    embed = discord.Embed(
-        description=(
-            "# **Управление приватной комнатой**\n\n"
-            "<:685116unlock:1562476005250039979> • Открыть канал\n"
-            "<:40421adduser:1562476318082338877> • Добавить пользователя\n"
-            "<:904340pencil:1562476055518904490> • Переименовать канал\n\n"
-            "<:807617yellowcrown:1562476141787222078> • Передать канал\n"
-            "<:998751lock:1562476028687945838> • Закрыть канал\n"
-            "🚫 • Выгнать пользователя\n\n"
-            "*Кнопки активны в вашем войсе.*"
-        ), 
-        color=discord.Color.dark_grey()
-    )
-    await ctx.send(embed=embed, view=VoiceControlPanel())
-
+я
 @bot.command()
 async def send_girl_ticket(ctx):
     try:
@@ -1714,10 +1696,10 @@ async def send_info(ctx):
     await ctx.send(embed=text_embed)
 
 # ===================================================
-# VOICE PANEL COMMAND (!send_voice_panel)
+# VOICE PANEL COMMAND (!send_voice)
 # ===================================================
 @bot.command()
-async def send_voice_panel(ctx):
+async def send_voice(ctx):
     try:
         await ctx.message.delete()
     except:
