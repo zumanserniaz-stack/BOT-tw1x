@@ -1811,13 +1811,21 @@ async def on_message(message):
 @bot.event
 async def on_ready():
     try:
-        # Өз серверіңіздің ID (айдиін) мына жерге жазыңыз: discord.Object(id=СЕРВЕР_ID)
-        guild_id = discord.Object(id=1548371779523837952) # <-- Өз сервер ID-іңізді жазыңыз
+        # Укажите ID вашего сервера вместо цифр ниже
+        guild_id = discord.Object(id=1548371779523837952)
+        
+        # Очищаем дубликаты с глобального уровня, чтобы они не пересекались
+        bot.tree.clear_commands(guild=None)
+        await bot.tree.sync(guild=None)
+        
+        # Синхронизируем чистые команды только на ваш сервер
         bot.tree.copy_global_to(guild=guild_id)
         synced = await bot.tree.sync(guild=guild_id)
-        print(f"Синхронизировано слэш-команд на сервере: {len(synced)}")
+        
+        print(f"Успешно синхронизировано команд на сервере: {len(synced)}")
     except Exception as e:
         print(e)
+        
     print(f"Бот {bot.user} запущен!")
 # 1. Команда /avatar
 @bot.tree.command(name="avatar", description="Показать аватар пользователя")
