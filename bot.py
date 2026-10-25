@@ -10,7 +10,6 @@ from discord.ui import View, Button, Modal, TextInput, UserSelect
 from flask import Flask
 from threading import Thread
 import yt_dlp
-
 # --------------------------------------------------
 # WEB SERVER FOR RENDER 24/7
 # --------------------------------------------------
@@ -1730,6 +1729,40 @@ async def send_voice(ctx):
         color=green_color
     )
     await ctx.send(embed=text_embed, view=VoiceControlPanel())
+    
+    # --------------------------------------------------
+# COMMAND: SOCIAL LINKS / BUTTONS (!social немесе !links)
+# --------------------------------------------------
+@bot.command(name="social", aliases=["links", сайты])
+async def social_buttons(ctx):
+    try:
+        await ctx.message.delete()
+    except:
+        pass
+
+    # 1. Түймелерді жасаймыз (URL слтемелерімен)
+    view = View()
+    
+    # Discord түймесі
+    discord_button = Button(
+        label="Discord", 
+        url="https://discord.com/users/1043426897482231859",  # Орынға өз сілтемеңізді жазыңыз
+        emoji="💬"  # Қаласаңыз эмодзи қосуға болады
+    )
+    
+    # WhatsApp түймесі
+    whatsapp_button = Button(
+        label="Whatsapp", 
+        url="https://wa.me/номер_телефона",  # Өз WhatsApp сілтемеңіз
+        emoji="🟢"
+    )
+
+    # Түймелерді көрініске қосамыз
+    view.add_item(discord_button)
+    view.add_item(whatsapp_button)
+
+    # 2. Хабарлама жіберу (мәтінмен және түймелермен бірге)
+    await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
 # --------------------------------------------------
