@@ -1730,38 +1730,35 @@ async def send_voice(ctx):
     )
     await ctx.send(embed=text_embed, view=VoiceControlPanel())
     
-    # --------------------------------------------------
-# COMMAND: SOCIAL LINKS / BUTTONS (!social немесе !links)
-# --------------------------------------------------
-@bot.command(name="social", aliases=["links", сайты])
+# ===================================================
+# COMMAND: SOCIAL LINKS (!social / !links)
+# ===================================================
+@bot.command(name="social", aliases=["links"])
 async def social_buttons(ctx):
     try:
         await ctx.message.delete()
     except:
         pass
 
-    # 1. Түймелерді жасаймыз (URL слтемелерімен)
     view = View()
     
     # Discord түймесі
     discord_button = Button(
         label="Discord", 
-        url="https://discord.com/users/1043426897482231859",  # Орынға өз сілтемеңізді жазыңыз
-        emoji="💬"  # Қаласаңыз эмодзи қосуға болады
+        url="https://discord.com/users/1043426897482231859", 
+        emoji="💬"
     )
     
     # WhatsApp түймесі
     whatsapp_button = Button(
         label="Whatsapp", 
-        url="https://wa.me/номер_телефона",  # Өз WhatsApp сілтемеңіз
+        url="https://wa.me/your_number", 
         emoji="🟢"
     )
 
-    # Түймелерді көрініске қосамыз
     view.add_item(discord_button)
     view.add_item(whatsapp_button)
 
-    # 2. Хабарлама жіберу (мәтінмен және түймелермен бірге)
     await ctx.send("👇 Төмендегі сілтемелер арқылы бізбен байланыса аласыз:", view=view)
 # --------------------------------------------------
 # RUN BOT WITH SAFE TOKEN CHECK
