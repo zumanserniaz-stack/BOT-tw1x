@@ -1745,7 +1745,7 @@ async def social_buttons(ctx):
     
     whatsapp_button = Button(
         label="Whatsapp", 
-        url="https://wa.me/747 744 2206", 
+        url="https://wa.me/7477442206", 
         emoji="🟢"
     )
 
